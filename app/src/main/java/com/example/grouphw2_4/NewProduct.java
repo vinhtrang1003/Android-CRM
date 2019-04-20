@@ -15,6 +15,7 @@ import javaapplication1.Account;
 import javaapplication1.Products;
 
 
+
 public class NewProduct extends AppCompatActivity
 {
     Button CreateProductButton;
@@ -59,17 +60,16 @@ public class NewProduct extends AppCompatActivity
 
         ProductNameET = (EditText) findViewById(R.id.ProductName);
         ProductIDET = (EditText) findViewById(R.id.ProductID);
-        ProductPriceET = (EditText) findViewById(R.id.ProductPrice);
+        ProductPriceET = (EditText) findViewById(R.id.PPrice);
 
+        String dp= ProductPriceET.getText().toString();
+        Double Price = Double.parseDouble(dp);
         String ProductName = ProductNameET.getText().toString();
         String ProductID = ProductIDET.getText().toString();
-        String Price = ProductIDET.getText().toString();
 
+        Products p = new Products(ProductName,ProductID,Price);
+        accList.get(accPosition).getProductsList().add(p);
 
-        ProductInfo = new ArrayList<String>();
-        ProductInfo.add(ProductName);
-        ProductInfo.add(ProductID);
-        ProductInfo.add(Price);
 
         // Passing ProductAdded back to AccountMenu
 
@@ -77,8 +77,6 @@ public class NewProduct extends AppCompatActivity
 
         intent.putExtra("accList",(Serializable) accList);
         intent.putExtra("accPos",(Serializable) accPosition);
-
-        intent.putStringArrayListExtra("ProductInfo",(ArrayList<String>) ProductInfo);
 
         setResult(RESULT_OK,intent);
         finish();

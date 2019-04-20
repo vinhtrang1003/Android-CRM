@@ -144,10 +144,15 @@ public class Account implements Serializable {
     }
      //////////////////////Vinh Transaction ////////////////////////////////
      // Borrow get contact from tung
-     public Contact getContact(int i) 
+     public Contact getContact(int i)
      {
         return contactLst.get(i);
      }
+
+    public List<Transaction> getTransactionList()
+    {
+        return TransactionList;
+    }
      
       public Transaction getTransaction(int i) 
      {

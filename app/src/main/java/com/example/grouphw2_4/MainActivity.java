@@ -1,8 +1,8 @@
 package com.example.grouphw2_4;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,8 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javaapplication1.Account;
+import javaapplication1.Contact;
+import javaapplication1.Products;
+import javaapplication1.Transaction;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     Button accountButton;
     Button fileButton;
     List<Account> accountList;
@@ -24,13 +27,26 @@ public class MainActivity extends AppCompatActivity {
 
         accountList = new ArrayList<Account>();
 
-        // load accountList for internal file
 
-
-
+        Contact a = new Contact("a","mr","5101234587","a@gmail.com");
+        Contact b = new Contact("b","mr","5101236542","b@gmail.com");
+        Products p = new Products("PC1","01", 599.99);
+        Products d = new Products("PC2","02", 699.99);
+        Products e = new Products("PC3","03", 799.99);
 
         Account acc = new Account("Tung Account", "tech", "Hayward", "CA", "510-543-4354","Tung Nguyen" );
+        acc.getContactLst().add(a);
+        acc.getContactLst().add(b);
+        acc.getProductsList().add(p);
+        acc.getProductsList().add(d);
+        acc.getProductsList().add(e);
+
         Account acc2 = new Account("Vinh Account", "CS", "Hayward", "CA", "510-600-9094","Vinh Trang" );
+        acc2.getContactLst().add(a);
+        acc2.getContactLst().add(b);
+        acc2.getProductsList().add(p);
+        acc2.getProductsList().add(d);
+        acc2.getProductsList().add(e);
 
         accountList.add(acc);
         accountList.add(acc2);
@@ -69,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -78,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK)
             {
                 accountList = (List<Account>) data.getSerializableExtra("accList");
+
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra("accList",(Serializable) accountList);
+                setResult(RESULT_OK,intent);
 
             }
         }

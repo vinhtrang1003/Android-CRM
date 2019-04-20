@@ -1,12 +1,13 @@
 package com.example.grouphw2_4;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javaapplication1.Account;
@@ -66,6 +67,30 @@ public class AccountSubOptionActivity extends AppCompatActivity {
             }
         });
 
+        // New Transaction button called openNewTransactionActivity
+        NewTransactionButton = (Button) findViewById(R.id.NewTransactionButton);
+        NewTransactionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                openNewTransactionActivity();
+            }
+        });
+
+
+        // List Transaction button called openListTransactionActivity
+        ListTransactionButton = (Button) findViewById(R.id.ListTransactionButton);
+        ListTransactionButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                openListTransactionActivity();
+            }
+        });
+
+
 
     }
     public void openContactActivity(){
@@ -90,6 +115,21 @@ public class AccountSubOptionActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openNewTransactionActivity(){
+        Intent intent = new Intent(this, NewTransaction.class);
+        intent.putExtra("accPosition",(int) accPosition);
+        intent.putExtra("accountList", (Serializable) accList);
+        startActivityForResult(intent,10);
+    }
+
+    public void openListTransactionActivity()
+    {
+        Intent intent = new Intent(this, ListTransaction.class);
+        intent.putExtra("accPosition",(int) accPosition);
+        intent.putExtra("accountList", (Serializable) accList);
+        startActivity(intent);
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -99,28 +139,30 @@ public class AccountSubOptionActivity extends AppCompatActivity {
                 Intent intent = new Intent(this,AccountSubOptionActivity.class);
                 intent.putExtra("accList",(Serializable) accList);
                 setResult(RESULT_OK,intent);
-                finish();
+                //finish();
             }
         }
         //new product result
         if (requestCode == 9) {
             if(resultCode == RESULT_OK) {
-                ProductInfo = data.getStringArrayListExtra("ProductInfo");
                 accList = (List<Account>) data.getSerializableExtra("accList");
-                String str = "0.0";
-                // Price will be set later!
-                double d = Double.parseDouble(str);
-                Products p = new Products(ProductInfo.get(0),ProductInfo.get(1),d);
-                accList.get(accPosition).getProductsList().add(p);
-
-
-
                 Intent intent = new Intent(this,AccountSubOptionActivity.class);
                 intent.putExtra("accList",(Serializable) accList);
                 setResult(RESULT_OK,intent);
                 //finish();
             }
         }
+        //new Transaction result
+        if (requestCode == 10) {
+            if(resultCode == RESULT_OK) {
+                accList = (List<Account>) data.getSerializableExtra("accList");
+                Intent intent = new Intent(this,AccountSubOptionActivity.class);
+                intent.putExtra("accList",(Serializable) accList);
+                setResult(RESULT_OK,intent);
+                //finish();
+            }
+        }
+
 
     }
 }

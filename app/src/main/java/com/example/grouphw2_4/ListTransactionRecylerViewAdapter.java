@@ -7,19 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import java.util.List;
 
 import javaapplication1.Account;
-import javaapplication1.Contact;
+import javaapplication1.Products;
 
-public class ListContactRecylerViewAdapter extends RecyclerView.Adapter<ListContactRecylerViewAdapter.ViewHolder> {
+/**
+ * {@link RecyclerView.Adapter}
+ * TODO: Replace the implementation with code for your data type.
+ */
+public class ListTransactionRecylerViewAdapter extends RecyclerView.Adapter<ListTransactionRecylerViewAdapter.ViewHolder> {
     private List<Account> accountList;
     private int accPos;
     private LayoutInflater mInflater;
-    private ListContactRecylerViewAdapter.ItemClickListener mClickListener;
+    private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    ListContactRecylerViewAdapter(Context context, List<Account> a_accList, int a_accPos) {
+    ListTransactionRecylerViewAdapter(Context context, List<Account> a_accList, int a_accPos) {
         this.mInflater = LayoutInflater.from(context);
         this.accountList = a_accList;
         this.accPos = a_accPos;
@@ -27,27 +32,33 @@ public class ListContactRecylerViewAdapter extends RecyclerView.Adapter<ListCont
 
     // inflates the row layout from xml when needed
     @Override
-    public ListContactRecylerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListTransactionRecylerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
-        return new ListContactRecylerViewAdapter.ViewHolder(view);
+        return new ListTransactionRecylerViewAdapter.ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ListContactRecylerViewAdapter.ViewHolder holder, int position) {
-        String category = accountList.get(accPos).getContact(position).getName();
-        holder.myTextView.setText("#" + position);
-        holder.myTextView.append(" | Name: ");
+    public void onBindViewHolder(ListTransactionRecylerViewAdapter.ViewHolder holder, int position) {
+        String category = accountList.get(accPos).getTransaction(position).TransactionID;
+        holder.myTextView.setText("TID: ");
         holder.myTextView.append(category);
-        holder.myTextView.append(" | Phone: "+ accountList.get(accPos).getContact(position).getPhone());
-
-
+        holder.myTextView.append(" | Customer: ");
+        String customer = accountList.get(accPos).getTransaction(position).getCName();
+        holder.myTextView.append(customer);
+        holder.myTextView.append(" | Pname: ");
+        String pname = accountList.get(accPos).getTransaction(position).getPName();
+        holder.myTextView.append(pname);
+        holder.myTextView.append(" | Quality: ");
+        int Q = accountList.get(accPos).getTransaction(position).getQuality();
+        String Quality = Integer.toString(Q);
+        holder.myTextView.append(Quality);
     }
 
     // total number of rows
     @Override
     public int getItemCount() {
-        return accountList.get(accPos).getContactLst().size();
+        return accountList.get(accPos).getTransactionList().size();
     }
 
 
@@ -69,11 +80,11 @@ public class ListContactRecylerViewAdapter extends RecyclerView.Adapter<ListCont
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return accountList.get(accPos).getContactLst().get(id).getName();
+        return accountList.get(accPos).getTransaction(id).TransactionID;
     }
 
     // allows clicks events to be caught
-    void setClickListener(ListContactRecylerViewAdapter.ItemClickListener itemClickListener) {
+    void setClickListener(ListTransactionRecylerViewAdapter.ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 

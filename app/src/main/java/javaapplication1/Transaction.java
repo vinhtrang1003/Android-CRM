@@ -5,6 +5,7 @@
  */
 package javaapplication1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.GregorianCalendar;
  *
  * @author Vinh
  */
-public class Transaction 
+public class Transaction implements Serializable
 {
     private String CustomerName;
     private String ProductName;

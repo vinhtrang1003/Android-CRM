@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import java.util.List;
 
 import javaapplication1.Account;
+import javaapplication1.Products;
 
 /**
  * {@link RecyclerView.Adapter}
@@ -39,7 +41,10 @@ public class ListProductRecylerViewAdapter extends RecyclerView.Adapter<ListProd
     @Override
     public void onBindViewHolder(ListProductRecylerViewAdapter.ViewHolder holder, int position) {
         String category = accountList.get(accPos).getProduct(position).getpname();
-        holder.myTextView.setText(category);
+        holder.myTextView.setText("#" + position);
+        holder.myTextView.append(" | Pname: ");
+        holder.myTextView.append(category);
+        holder.myTextView.append(" | Pprice: "+ accountList.get(accPos).getProduct(position).getpprice());
     }
 
     // total number of rows

@@ -8,13 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javaapplication1.Account;
 import javaapplication1.Contact;
 
-public class ListContactActivity extends AppCompatActivity implements ListContactRecylerViewAdapter.ItemClickListener {
+public class ChooseCustomer extends AppCompatActivity implements ListContactRecylerViewAdapter.ItemClickListener {
     ListContactRecylerViewAdapter adapter;
     List<Account> accList;
     int accPosition;
@@ -23,7 +22,7 @@ public class ListContactActivity extends AppCompatActivity implements ListContac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_contact);
+        setContentView(R.layout.activity_choose_customer);
 
         Intent intent = getIntent();
         accList = (List<Account>) intent.getSerializableExtra("accountList");
@@ -32,7 +31,7 @@ public class ListContactActivity extends AppCompatActivity implements ListContac
         contList = accList.get(accPosition).getContactLst();
 
         // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvContactList);
+        RecyclerView recyclerView = findViewById(R.id.rvCustomerList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ListContactRecylerViewAdapter(this, accList, accPosition);
         adapter.setClickListener(this);
@@ -42,11 +41,12 @@ public class ListContactActivity extends AppCompatActivity implements ListContac
     @Override
     public void onItemClick(View view, int position)
     {
-        Intent intent2 = new Intent(this, DisplayContactDetailsActivity.class);
-        intent2.putExtra("contactPosition",(int) position);
+        Intent intent2 = new Intent(this, NewTransaction.class);
         intent2.putExtra("accPos",(int) accPosition);
         intent2.putExtra("accList", (Serializable) accList);
-        startActivity(intent2);
+        setResult(RESULT_OK,intent2);
+        finish();
 
     }
 }
+
