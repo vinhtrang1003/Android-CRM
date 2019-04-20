@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import javaapplication1.Account;
-import javaapplication1.Contact;
 
 public class ListContactRecylerViewAdapter extends RecyclerView.Adapter<ListContactRecylerViewAdapter.ViewHolder> {
     private List<Account> accountList;

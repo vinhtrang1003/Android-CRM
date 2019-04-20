@@ -1,8 +1,8 @@
 package com.example.grouphw2_4;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javaapplication1.Account;
-import javaapplication1.Products;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
     Button accountButton;
+    Button fileButton;
     List<Account> accountList;
 
     @Override
@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
         accountList = new ArrayList<Account>();
+
+        // load accountList for internal file
+
+
+
 
         Account acc = new Account("Tung Account", "tech", "Hayward", "CA", "510-543-4354","Tung Nguyen" );
         Account acc2 = new Account("Vinh Account", "CS", "Hayward", "CA", "510-600-9094","Vinh Trang" );
@@ -38,6 +43,14 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        fileButton = (Button) findViewById(R.id.fileButton);
+        fileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileOptionActivity();
+            }
+        });
+
 
     }
 
@@ -47,6 +60,14 @@ public class MainActivity extends AppCompatActivity  {
         intent.putExtra("accountList", (Serializable) accountList);
         startActivityForResult(intent,6);
     }
+
+    public void openFileOptionActivity(){
+        Intent intent = new Intent(this, FileActivity.class);
+
+        intent.putExtra("accountList", (Serializable) accountList);
+        startActivityForResult(intent,9);
+    }
+
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -58,9 +79,12 @@ public class MainActivity extends AppCompatActivity  {
             {
                 accountList = (List<Account>) data.getSerializableExtra("accList");
 
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtra("accList",(Serializable) accountList);
-                setResult(RESULT_OK,intent);
+            }
+        }
+        if(requestCode == 9){
+            if(resultCode == RESULT_OK)
+            {
+                accountList = (List<Account>) data.getSerializableExtra("result");
 
             }
         }
